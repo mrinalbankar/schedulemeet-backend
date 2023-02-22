@@ -8,7 +8,17 @@ const { verifyToken, verifyStudent } = require('../middlewares/verifytoken')
 router.post("/schedule", verifyStudent, async (req, res) => {
   const newMeeting = new Meeting(req.body)
   try {
+    
     const saveMeeting = await newMeeting.save()
+    await Meeting.findByIdAndUpdate(
+      newMeeting.id,
+      {
+        $set: {
+          student: req.user.studentname,
+          action: "pending"
+        }
+      }
+    )
     res.status(200).json(saveMeeting)
 
   } catch (err) {

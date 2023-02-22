@@ -16,7 +16,7 @@ const meetingSchema = new mongoose.Schema(
       }
     },
     Duration: {
-      type: Date
+      type: Number
     },
     purpose: {
       type: String,
@@ -24,7 +24,7 @@ const meetingSchema = new mongoose.Schema(
     },
     action: {
       type: String,
-      enum: ["accept", "reject"]
+      enum: ["pending", "accept", "reject"]
     },
     location: {
       type: String
