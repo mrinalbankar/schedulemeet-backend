@@ -1,8 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const Professor = require('../models/Professor')
+const Meeting = require('../models/Meeting')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+
+const { verifyToken, verifyStudent } = require('../middlewares/verifytoken')
 
 //register professor
 router.post("/register", async (req, res) => {
@@ -60,6 +63,21 @@ router.post("/login", async (req, res) => {
     )
 
     return res.status(200).json({ token, professor })
+
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
+//get professor by id
+router.get("/find/:id", verifyStudent, async (req, res) => {
+  try {
+
+    const professor = await Professor.findById(req.params.id)
+    if (!professor) {
+      return res.status(404).json("Following data is not available")
+    }
+    res.status(200).json(professor)
 
   } catch (err) {
     res.status(500).json(err)

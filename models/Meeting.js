@@ -5,6 +5,9 @@ const meetingSchema = new mongoose.Schema(
     student: {
       type: String
     },
+    professor: {
+      type: String
+    },
     meetingdate: {
       startdate:  {
         type: Date,

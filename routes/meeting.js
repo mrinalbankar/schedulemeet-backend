@@ -9,8 +9,11 @@ router.post("/schedule", verifyStudent, async (req, res) => {
   const newMeeting = new Meeting(req.body)
   try {
     
-    const saveMeeting = await newMeeting.save()
-    await Meeting.findByIdAndUpdate(
+    //save new meeting
+    await newMeeting.save()
+
+    //save logged-In student's data in the meeting created
+    const saveMeeting = await Meeting.findByIdAndUpdate(
       newMeeting.id,
       {
         $set: {
@@ -26,7 +29,7 @@ router.post("/schedule", verifyStudent, async (req, res) => {
   }
 })
 
-//get meeting id
+//get meeting by id
 router.get("/find/:id", verifyToken, async (req, res) => {
   try {
 
@@ -41,10 +44,10 @@ router.get("/find/:id", verifyToken, async (req, res) => {
   }
 })
 
-//get all meetings
+//get all meetings of the logged-In professor
 router.get("/", verifyToken, async (req, res) => {
   try {
-    const meetings = await Meeting.find()
+    const meetings = await Meeting.find({professor: req.user.professor})
     res.status(200).json(meetings)
 
   } catch (err) {
