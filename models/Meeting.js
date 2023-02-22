@@ -15,6 +15,12 @@ const meetingSchema = new mongoose.Schema(
         default: Date.now,
       }
     },
+    fixmeetingdate: {
+      type: Date
+    },
+    fixmeetingtime: {
+      type: String,
+    },
     Duration: {
       type: Number
     },

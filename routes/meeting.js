@@ -61,7 +61,9 @@ router.put("/:id", verifyToken, async (req, res) => {
       {
         $set: {
           location: req.body.location,
-          action: req.body.action
+          action: req.body.action,
+          fixmeetingdate: req.body.fixmeetingdate,
+          fixmeetingtime: req.body.fixmeetingtime
         }
       },
       { new: true }
